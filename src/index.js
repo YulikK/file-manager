@@ -1,5 +1,3 @@
-import User from './user/index.js';
-import Navigation from './navigation/index.js';
+import Cli from './cli/index.js';
 
-const user = new User();
-const navigator = new Navigation();
+const cli = new Cli();
