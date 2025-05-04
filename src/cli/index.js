@@ -39,6 +39,13 @@ export default class Cli {
             args
           );
           break;
+        case 'add':
+          await this.fileOperation.add(
+            this.navigation.getCurrentDirectory(),
+            args
+          );
+          break;
+
         default:
           console.log('Unknown command');
       }
