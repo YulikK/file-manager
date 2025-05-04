@@ -4,6 +4,7 @@ import mkdir from './commands/mkdir.js';
 import rn from './commands/rn.js';
 import cp from './commands/cp.js';
 import mv from './commands/mv.js';
+import rm from './commands/rm.js';
 
 export default class FileOperation {
   async cat(currentDir, args) {
@@ -28,5 +29,9 @@ export default class FileOperation {
 
   async mv(currentDir, args) {
     return await mv(currentDir, args);
+  }
+
+  async rm(currentDir, args) {
+    return await rm(currentDir, args);
   }
 }

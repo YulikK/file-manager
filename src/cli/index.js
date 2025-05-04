@@ -69,6 +69,12 @@ export default class Cli {
             args
           );
           break;
+        case 'rm':
+          await this.fileOperation.rm(
+            this.navigation.getCurrentDirectory(),
+            args
+          );
+          break;
         default:
           console.log('Unknown command');
       }
