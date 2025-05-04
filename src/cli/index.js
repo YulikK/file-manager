@@ -45,7 +45,12 @@ export default class Cli {
             args
           );
           break;
-
+        case 'mkdir':
+          await this.fileOperation.mkdir(
+            this.navigation.getCurrentDirectory(),
+            args
+          );
+          break;
         default:
           console.log('Unknown command');
       }
