@@ -57,6 +57,12 @@ export default class Cli {
             args
           );
           break;
+        case 'cp':
+          await this.fileOperation.cp(
+            this.navigation.getCurrentDirectory(),
+            args
+          );
+          break;
         default:
           console.log('Unknown command');
       }
