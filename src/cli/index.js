@@ -2,12 +2,14 @@ import process from 'process';
 import User from '../user/index.js';
 import Navigation from '../navigation/index.js';
 import FileOperation from '../file-operation/index.js';
+import OperatingSystem from '../operating-system/index.js';
 
 export default class Cli {
   constructor() {
     this.user = new User();
     this.navigation = new Navigation();
     this.fileOperation = new FileOperation();
+    this.os = new OperatingSystem();
     this.#setupInputHandler();
     this.#printCurrentDirectory();
   }
@@ -74,6 +76,9 @@ export default class Cli {
             this.navigation.getCurrentDirectory(),
             args
           );
+          break;
+        case 'os':
+          this.os.run(args);
           break;
         default:
           console.log('Unknown command');
