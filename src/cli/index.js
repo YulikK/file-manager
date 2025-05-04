@@ -80,6 +80,12 @@ export default class Cli {
         case 'os':
           this.os.run(args);
           break;
+        case 'hash':
+          await this.fileOperation.hash(
+            this.navigation.getCurrentDirectory(),
+            args
+          );
+          break;
         default:
           console.log('Unknown command');
       }
