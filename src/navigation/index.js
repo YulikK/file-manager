@@ -1,6 +1,8 @@
 import os from 'os';
 import process from 'process';
 import goUp from './commands/up.js';
+import cd from './commands/cd.js';
+import ls from './commands/ls.js';
 
 class Navigation {
   constructor() {
@@ -21,10 +23,17 @@ class Navigation {
   #setupInputHandler() {
     process.stdin.on('data', (data) => {
       const input = data.toString().trim();
+      const [command, ...args] = input.split(' ');
 
-      switch (input) {
+      switch (command) {
         case 'up':
           this.currentDir = goUp(this.currentDir);
+          break;
+        case 'cd':
+          this.currentDir = cd(this.currentDir, args);
+          break;
+        case 'ls':
+          this.currentDir = ls(this.currentDir);
           break;
         default:
           console.log('Unknown command');
