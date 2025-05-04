@@ -1,17 +1,21 @@
 import fs from 'fs';
 import path from 'path';
 
-export default function add(currentDir, args) {
+export default function rn(currentDir, args) {
   return new Promise((resolve, reject) => {
-    if (!args || args.length === 0) {
+    if (!args || args.length < 2) {
       console.error('Invalid input');
       resolve();
     }
 
     try {
-      const filePath = path.resolve(currentDir, args[0]);
+      const oldPath = path.isAbsolute(args[0])
+        ? args[0]
+        : path.resolve(currentDir, args[0]);
 
-      fs.writeFile(filePath, '', (err) => {
+      const newPath = path.resolve(path.dirname(oldPath), args[1]);
+
+      fs.rename(oldPath, newPath, (err) => {
         if (err) {
           console.error('Operation failed');
           resolve();

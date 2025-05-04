@@ -1,6 +1,7 @@
 import cat from './commands/cat.js';
 import add from './commands/add.js';
 import mkdir from './commands/mkdir.js';
+import rn from './commands/rn.js';
 
 export default class FileOperation {
   async cat(currentDir, args) {
@@ -13,5 +14,9 @@ export default class FileOperation {
 
   async mkdir(currentDir, args) {
     return await mkdir(currentDir, args);
+  }
+
+  async rn(currentDir, args) {
+    return await rn(currentDir, args);
   }
 }
