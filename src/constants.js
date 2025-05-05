@@ -28,6 +28,7 @@ export const COMMANDS_MAP = {
     arg_count: 1,
     example: 'add new_file_name',
     description: 'Add file to current directory',
+    success_msg: 'File added successfully',
   },
   MKDIR: {
     name: 'mkdir',
