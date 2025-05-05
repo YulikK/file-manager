@@ -33,13 +33,26 @@ export const extractAllArguments = (command, userInput) => {
       `Incorrect number of arguments provided. Expected ${commandConfig.arg_count} arguments.`,
       'red'
     );
-    return;
+    return null;
   }
   return args.slice(1);
 };
 
 export const extractArguments = (userInput) => {
-  return userInput.trim().match(/(?:[^\s"]+|"[^"]*")/g) || [];
+  return (
+    userInput
+      .trim()
+      .match(/[^\s"']+|"([^"]*)"|'([^']*)'/g)
+      .map((arg) => {
+        if (
+          (arg.startsWith('"') && arg.endsWith('"')) ||
+          (arg.startsWith("'") && arg.endsWith("'"))
+        ) {
+          return arg.slice(1, -1);
+        }
+        return arg;
+      }) || []
+  );
 };
 
 export const extractArgument = (userInput, argNumber) => {
@@ -54,9 +67,10 @@ export const extractArgument = (userInput, argNumber) => {
 
 export const parseInput = (userInput) => {
   const command = extractArgument(userInput, 0);
-
   const args = extractAllArguments(command, userInput);
-
+  if (!args || !command) {
+    return { command: null, args: null };
+  }
   return { command, args };
 };
 
