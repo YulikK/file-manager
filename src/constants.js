@@ -15,7 +15,7 @@ export const COMMANDS_MAP = {
     name: 'ls',
     arg_count: 0,
     example: 'ls',
-    description: 'List all files and directories in current directory',
+    description: 'List all files and dir',
   },
   CAT: {
     name: 'cat',

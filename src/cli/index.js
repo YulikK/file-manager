@@ -4,7 +4,7 @@ import Navigation from '../navigation/index.js';
 import FileOperation from '../file-operation/index.js';
 import OperatingSystem from '../operating-system/index.js';
 import { COMMANDS_MAP, COLORS_MAP } from '../constants.js';
-import { parseInput, logWithColor } from '../helper.js';
+import { parseInput, logWithColor, invalidCommand } from '../helper.js';
 
 export default class Cli {
   constructor() {
@@ -104,6 +104,8 @@ export default class Cli {
             break;
           case COMMANDS_MAP.EXIT.name:
             process.exit(0);
+          default:
+            invalidCommand();
         }
         this.#printCurrentDirectory();
       } catch (error) {
