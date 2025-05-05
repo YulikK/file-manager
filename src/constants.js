@@ -83,6 +83,12 @@ export const COMMANDS_MAP = {
     example: 'decompress path_to_file path_to_destination',
     description: 'Decompress file',
   },
+  EXIT: {
+    name: '.exit',
+    arg_count: 0,
+    example: '.exit',
+    description: 'Exit from the program',
+  },
 };
 
 export const OS_COMMANDS = {
