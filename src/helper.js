@@ -8,7 +8,7 @@ export function resolvePath(currentDir, filePath) {
     : path.resolve(currentDir, filePath);
 }
 
-export const checkArgumentCount = (command, userInput) => {
+export const extractAllArguments = (command, userInput) => {
   const commandConfig = Object.values(COMMANDS_MAP).find(
     (cmd) => cmd.name === command
   );
@@ -35,6 +35,7 @@ export const checkArgumentCount = (command, userInput) => {
     );
     return;
   }
+  return args.slice(1);
 };
 
 export const extractArguments = (userInput) => {
@@ -54,9 +55,9 @@ export const extractArgument = (userInput, argNumber) => {
 export const parseInput = (userInput) => {
   const command = extractArgument(userInput, 0);
 
-  checkArgumentCount(command, userInput);
+  const args = extractAllArguments(command, userInput);
 
-  return command;
+  return { command, args };
 };
 
 export const logWithColor = (text, color) => {

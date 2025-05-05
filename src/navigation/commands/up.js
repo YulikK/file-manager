@@ -1,4 +1,5 @@
-import path from 'path';
+import path from 'node:path';
+import { chdir } from 'node:process';
 import { logWithColor } from '../../helper.js';
 
 export default function goUp(currentDir) {
@@ -9,7 +10,7 @@ export default function goUp(currentDir) {
   }
 
   try {
-    process.chdir(parentDir);
+    chdir(parentDir);
   } catch (error) {
     logWithColor(`Operation failed:${error}`, 'red');
   }
