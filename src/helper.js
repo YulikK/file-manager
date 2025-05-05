@@ -14,7 +14,7 @@ export const checkArgumentCount = (command, userInput) => {
   );
 
   if (!commandConfig) {
-    console.error(`${os.EOL} Unknown command. Available commands:`);
+    logWithColor(`${os.EOL} Unknown command. Available commands:`, 'red');
     console.table(
       Object.values(COMMANDS_MAP).map((cmd) => ({
         Command: cmd.name,
@@ -29,8 +29,9 @@ export const checkArgumentCount = (command, userInput) => {
   const providedArgsCount = args.length - 1;
 
   if (providedArgsCount !== commandConfig.arg_count) {
-    console.error(
-      `Incorrect number of arguments provided. Expected ${commandConfig.arg_count} arguments.`
+    logWithColor(
+      `Incorrect number of arguments provided. Expected ${commandConfig.arg_count} arguments.`,
+      'red'
     );
     return;
   }
@@ -56,4 +57,16 @@ export const parseInput = (userInput) => {
   checkArgumentCount(command, userInput);
 
   return command;
+};
+
+export const logWithColor = (text, color) => {
+  const colors = {
+    reset: '\x1b[0m',
+    red: '\x1b[31m',
+    green: '\x1b[32m',
+    yellow: '\x1b[33m',
+    blue: '\x1b[34m',
+  };
+
+  console.log(`${colors[color]}${text}${colors.reset}`);
 };

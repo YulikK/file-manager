@@ -4,7 +4,7 @@ import Navigation from '../navigation/index.js';
 import FileOperation from '../file-operation/index.js';
 import OperatingSystem from '../operating-system/index.js';
 import { COMMANDS_MAP } from '../constants.js';
-import { parseInput } from '../helper.js';
+import { parseInput, logWithColor } from '../helper.js';
 
 export default class Cli {
   constructor() {
@@ -17,8 +17,9 @@ export default class Cli {
   }
 
   #printCurrentDirectory() {
-    console.log(
-      `You are currently in ${this.navigation.getCurrentDirectory()}`
+    logWithColor(
+      `You are currently in ${this.navigation.getCurrentDirectory()}`,
+      'green'
     );
   }
 
@@ -100,8 +101,6 @@ export default class Cli {
             args
           );
           break;
-        default:
-          console.log('Unknown command');
       }
       this.#printCurrentDirectory();
     });

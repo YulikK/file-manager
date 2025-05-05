@@ -1,24 +1,17 @@
 import fs from 'fs';
-import path from 'path';
 import crypto from 'crypto';
+import { resolvePath, logWithColor } from '../../helper.js';
 
 export default function hash(currentDir, args) {
   return new Promise((resolve) => {
-    if (!args || args.length === 0) {
-      console.error('Invalid input');
-      resolve();
-    }
-
     try {
-      const filePath = path.isAbsolute(args[0])
-        ? args[0]
-        : path.resolve(currentDir, args[0]);
+      const filePath = resolvePath(currentDir, args[0]);
 
       const readStream = fs.createReadStream(filePath);
       const hash = crypto.createHash('sha256');
 
       readStream.on('error', (error) => {
-        console.error(`Operation failed:${error}`);
+        logWithColor(`Operation failed:${error}`, 'red');
         resolve();
       });
 
@@ -27,11 +20,11 @@ export default function hash(currentDir, args) {
       });
 
       readStream.on('end', () => {
-        console.log(hash.digest('hex'));
+        logWithColor(hash.digest('hex'), 'blue');
         resolve();
       });
     } catch (error) {
-      console.error(`Operation failed:${error}`);
+      logWithColor(`Operation failed:${error}`, 'red');
       resolve();
     }
   });

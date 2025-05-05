@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { logWithColor } from '../../helper.js';
 
 export default function ls(currentDir) {
   try {
@@ -27,7 +28,7 @@ export default function ls(currentDir) {
 
     return currentDir;
   } catch (error) {
-    console.error(`Operation failed: ${error.message}`);
+    logWithColor(`Operation failed:${error}`, 'red');
     return currentDir;
   }
 }

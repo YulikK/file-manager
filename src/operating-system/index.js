@@ -1,5 +1,6 @@
 import os from 'os';
 import { OS_COMMANDS } from '../constants.js';
+import { logWithColor } from '../helper.js';
 
 export default class OperatingSystem {
   run(arg) {
@@ -19,13 +20,11 @@ export default class OperatingSystem {
       case OS_COMMANDS.ARCHITECTURE:
         this.#getArchitecture();
         break;
-      default:
-        console.log('Invalid OS command');
     }
   }
 
   #getEOL() {
-    console.log(`OS EOL: ${JSON.stringify(os.EOL)}`);
+    logWithColor(`OS EOL: ${JSON.stringify(os.EOL)}`, 'blue');
   }
 
   #getCPUs() {
@@ -36,19 +35,19 @@ export default class OperatingSystem {
       speed: `${(cpu.speed / 1000).toFixed(2)} GHz`,
     }));
 
-    console.log(`Overall amount of CPUs: ${cpus.length}`);
+    logWithColor(`Overall amount of CPUs: ${cpus.length}`, 'blue');
     console.table(cpuInfo);
   }
 
   #getHomeDir() {
-    console.log(`Home dir: ${os.homedir()}`);
+    logWithColor(`Home dir: ${os.homedir()}`, 'blue');
   }
 
   #getUsername() {
-    console.log(`User name: ${os.userInfo().username}`);
+    logWithColor(`User name: ${os.userInfo().username}`, 'blue');
   }
 
   #getArchitecture() {
-    console.log(`Architecture: ${os.arch()}`);
+    logWithColor(`Architecture: ${os.arch()}`, 'blue');
   }
 }

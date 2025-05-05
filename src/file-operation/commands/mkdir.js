@@ -1,25 +1,20 @@
 import fs from 'fs';
-import path from 'path';
+import { resolvePath, logWithColor } from '../../helper.js';
 
 export default function mkdir(currentDir, args) {
   return new Promise((resolve, reject) => {
-    if (!args || args.length === 0) {
-      console.error('Invalid input');
-      resolve();
-    }
-
     try {
-      const dirPath = path.resolve(currentDir, args[0]);
+      const dirPath = resolvePath(currentDir, args[0]);
 
       fs.mkdir(dirPath, (err) => {
         if (err) {
-          console.error('Operation failed');
+          logWithColor(`Operation failed: ${err}`, 'red');
           resolve();
         }
         resolve();
       });
     } catch (error) {
-      console.error('Operation failed');
+      logWithColor(`Operation failed: ${err}`, 'red');
       resolve();
     }
   });

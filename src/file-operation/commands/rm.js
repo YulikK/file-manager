@@ -1,26 +1,19 @@
 import fs from 'fs';
-import path from 'path';
+import { logWithColor, resolvePath } from '../../helper.js';
 
 export default function rm(currentDir, args) {
   return new Promise((resolve) => {
-    if (!args || args.length === 0) {
-      console.error('Invalid input');
-      resolve();
-    }
-
     try {
-      const filePath = path.isAbsolute(args[0])
-        ? args[0]
-        : path.resolve(currentDir, args[0]);
+      const filePath = resolvePath(currentDir, args[0]);
 
-      fs.unlink(filePath, (err) => {
-        if (err) {
-          console.error(`Operation failed:${err}`);
+      fs.unlink(filePath, (error) => {
+        if (error) {
+          logWithColor(`Operation failed:${error}`, 'red');
         }
         resolve();
       });
     } catch (error) {
-      console.error(`Operation failed:${error}`);
+      logWithColor(`Operation failed:${error}`, 'red');
       resolve();
     }
   });

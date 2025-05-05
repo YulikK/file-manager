@@ -1,25 +1,21 @@
 import fs from 'fs';
 import path from 'path';
+import { logWithColor } from '../../helper.js';
 
 export default function add(currentDir, args) {
   return new Promise((resolve, reject) => {
-    if (!args || args.length === 0) {
-      console.error('Invalid input');
-      resolve();
-    }
-
     try {
       const filePath = path.resolve(currentDir, args[0]);
 
       fs.writeFile(filePath, '', (err) => {
         if (err) {
-          console.error('Operation failed');
+          logWithColor(`Operation failed: ${err}`, 'red');
           resolve();
         }
         resolve();
       });
     } catch (error) {
-      console.error('Operation failed');
+      logWithColor(`Operation failed: ${err}`, 'red');
       resolve();
     }
   });

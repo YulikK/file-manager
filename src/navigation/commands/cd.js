@@ -1,12 +1,8 @@
 import path from 'path';
 import process from 'process';
+import { logWithColor } from '../../helper.js';
 
 export default function cd(currentDir, args) {
-  if (!args || args.length === 0) {
-    console.error('Invalid input');
-    return currentDir;
-  }
-
   try {
     const targetPath = args.join(' ');
 
@@ -17,7 +13,7 @@ export default function cd(currentDir, args) {
     process.chdir(newPath);
     return newPath;
   } catch (error) {
-    console.error('Operation failed');
+    logWithColor(`Operation failed:${error}`, 'red');
     return currentDir;
   }
 }
