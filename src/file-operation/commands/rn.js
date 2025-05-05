@@ -1,24 +1,11 @@
-import fs from 'fs';
-import path from 'path';
-import { logWithColor, resolvePath } from '../../helper.js';
-import { COLORS_MAP } from '../../constants.js';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { resolvePath } from '../../helper.js';
 
-export default function rn(currentDir, args) {
-  return new Promise((resolve, reject) => {
-    try {
-      const oldPath = resolvePath(currentDir, args[0]);
-      const newPath = path.resolve(path.dirname(oldPath), args[1]);
+export default async function rn(currentDir, args) {
+  const oldPath = resolvePath(currentDir, args[0]);
+  const newFileName = path.basename(args[1]);
+  const newPath = path.resolve(path.dirname(oldPath), newFileName);
 
-      fs.rename(oldPath, newPath, (error) => {
-        if (error) {
-          logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
-          resolve();
-        }
-        resolve();
-      });
-    } catch (error) {
-      logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
-      resolve();
-    }
-  });
+  await fs.rename(oldPath, newPath);
 }
