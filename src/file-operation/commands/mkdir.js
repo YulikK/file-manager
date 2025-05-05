@@ -1,22 +1,14 @@
-import fs from 'fs';
+import fs from 'node:fs/promises';
 import { resolvePath, logWithColor } from '../../helper.js';
-import { COLORS_MAP } from '../../constants.js';
+import { COLORS_MAP, COMMANDS_MAP } from '../../constants.js';
 
-export default function mkdir(currentDir, args) {
-  return new Promise((resolve, reject) => {
-    try {
-      const dirPath = resolvePath(currentDir, args[0]);
+export default async function mkdir(currentDir, args) {
+  const dirPath = resolvePath(currentDir, args[0]);
 
-      fs.mkdir(dirPath, (err) => {
-        if (err) {
-          logWithColor(`Operation failed: ${err}`, COLORS_MAP.RED);
-          resolve();
-        }
-        resolve();
-      });
-    } catch (error) {
-      logWithColor(`Operation failed: ${err}`, COLORS_MAP.RED);
-      resolve();
-    }
-  });
+  await fs.mkdir(dirPath, { recursive: false });
+
+  logWithColor(
+    `${COMMANDS_MAP.MKDIR.success_msg}: ${dirPath}`,
+    COLORS_MAP.BLUE
+  );
 }

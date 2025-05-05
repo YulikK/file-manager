@@ -35,6 +35,7 @@ export const COMMANDS_MAP = {
     arg_count: 1,
     example: 'mkdir new_directory_name',
     description: 'Create new directory',
+    success_msg: 'Directory created successfully',
   },
   RN: {
     name: 'rn',
