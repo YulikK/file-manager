@@ -1,6 +1,6 @@
-import os from 'os';
+import os from 'node:os';
 import { OS_COMMANDS } from '../constants.js';
-import { logWithColor } from '../helper.js';
+import { logWithColor, invalidOsCommand } from '../helper.js';
 import { COLORS_MAP } from '../constants.js';
 
 export default class OperatingSystem {
@@ -21,6 +21,9 @@ export default class OperatingSystem {
       case OS_COMMANDS.ARCHITECTURE:
         this.#getArchitecture();
         break;
+      default:
+        invalidOsCommand();
+        break;
     }
   }
 
@@ -30,13 +33,13 @@ export default class OperatingSystem {
 
   #getCPUs() {
     const cpus = os.cpus();
+    const coreCount = os.availableParallelism();
     const cpuInfo = cpus.map((cpu, index) => ({
       number: index + 1,
       model: cpu.model,
       speed: `${(cpu.speed / 1000).toFixed(2)} GHz`,
     }));
-
-    logWithColor(`Overall amount of CPUs: ${cpus.length}`, COLORS_MAP.BLUE);
+    logWithColor(`Number of cores: ${coreCount}`, COLORS_MAP.BLUE);
     console.table(cpuInfo);
   }
 

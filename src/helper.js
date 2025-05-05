@@ -1,6 +1,6 @@
 import path from 'path';
 import os from 'os';
-import { COMMANDS_MAP, COLORS_MAP } from './constants.js';
+import { COMMANDS_MAP, COLORS_MAP, OS_COMMANDS } from './constants.js';
 
 export function resolvePath(currentDir, filePath) {
   return path.isAbsolute(filePath)
@@ -85,6 +85,20 @@ export function invalidCommand() {
       Command: cmd.name,
       Description: cmd.description,
       Example: cmd.example,
+    }))
+  );
+}
+
+export function invalidOsCommand() {
+  logWithColor(
+    `${os.EOL} Unknown OS command. Available OS commands:`,
+    COLORS_MAP.RED
+  );
+  console.table(
+    Object.entries(OS_COMMANDS).map(([key, value]) => ({
+      Command: value,
+      Description: `Get ${key.toLowerCase()} information`,
+      Example: `os ${value}`,
     }))
   );
 }
