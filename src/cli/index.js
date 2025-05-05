@@ -3,6 +3,7 @@ import User from '../user/index.js';
 import Navigation from '../navigation/index.js';
 import FileOperation from '../file-operation/index.js';
 import OperatingSystem from '../operating-system/index.js';
+import { COMMANDS } from '../constants.js';
 
 export default class Cli {
   constructor() {
@@ -26,73 +27,73 @@ export default class Cli {
       const [command, ...args] = input.split(' ');
 
       switch (command) {
-        case 'up':
+        case COMMANDS.UP:
           this.navigation.up();
           break;
-        case 'cd':
+        case COMMANDS.CD:
           this.navigation.cd(args);
           break;
-        case 'ls':
+        case COMMANDS.LS:
           this.navigation.ls();
           break;
-        case 'cat':
+        case COMMANDS.CAT:
           await this.fileOperation.cat(
             this.navigation.getCurrentDirectory(),
             args
           );
           break;
-        case 'add':
+        case COMMANDS.ADD:
           await this.fileOperation.add(
             this.navigation.getCurrentDirectory(),
             args
           );
           break;
-        case 'mkdir':
+        case COMMANDS.MKDIR:
           await this.fileOperation.mkdir(
             this.navigation.getCurrentDirectory(),
             args
           );
           break;
-        case 'rn':
+        case COMMANDS.RN:
           await this.fileOperation.rn(
             this.navigation.getCurrentDirectory(),
             args
           );
           break;
-        case 'cp':
+        case COMMANDS.CP:
           await this.fileOperation.cp(
             this.navigation.getCurrentDirectory(),
             args
           );
           break;
-        case 'mv':
+        case COMMANDS.MV:
           await this.fileOperation.mv(
             this.navigation.getCurrentDirectory(),
             args
           );
           break;
-        case 'rm':
+        case COMMANDS.RM:
           await this.fileOperation.rm(
             this.navigation.getCurrentDirectory(),
             args
           );
           break;
-        case 'os':
+        case COMMANDS.OS:
           this.os.run(args);
           break;
-        case 'hash':
+        case COMMANDS.HASH:
           await this.fileOperation.hash(
             this.navigation.getCurrentDirectory(),
             args
           );
           break;
-        case 'compress':
+        case COMMANDS.COMPRESS:
           await this.fileOperation.compress(
             this.navigation.getCurrentDirectory(),
             args
           );
           break;
-        case 'decompress':
+        case COMMANDS.DECOMPRESS:
           await this.fileOperation.decompress(
             this.navigation.getCurrentDirectory(),
             args

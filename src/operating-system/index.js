@@ -1,21 +1,22 @@
 import os from 'os';
+import { OS_COMMANDS } from '../constants.js';
 
 export default class OperatingSystem {
   run(arg) {
     switch (arg[0]) {
-      case '--EOL':
+      case OS_COMMANDS.EOL:
         this.#getEOL();
         break;
-      case '--cpus':
+      case OS_COMMANDS.CPUS:
         this.#getCPUs();
         break;
-      case '--homedir':
+      case OS_COMMANDS.HOMEDIR:
         this.#getHomeDir();
         break;
-      case '--username':
+      case OS_COMMANDS.USERNAME:
         this.#getUsername();
         break;
-      case '--architecture':
+      case OS_COMMANDS.ARCHITECTURE:
         this.#getArchitecture();
         break;
       default:
