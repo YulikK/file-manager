@@ -1,37 +1,19 @@
-import fs from 'fs';
-import path from 'path';
-import { resolvePath, logWithColor } from '../../helper.js';
-import { COLORS_MAP } from '../../constants.js';
+import fs from 'node:fs/promises';
+import { createReadStream, createWriteStream } from 'node:fs';
+import path from 'node:path';
+import { pipeline } from 'node:stream/promises';
+import { resolvePath } from '../../helper.js';
 
-export default function cp(currentDir, args) {
-  return new Promise((resolve) => {
-    try {
-      const sourcePath = resolvePath(currentDir, args[0]);
-      const targetPath = path.isAbsolute(args[1])
-        ? path.resolve(args[1], path.basename(sourcePath))
-        : path.resolve(currentDir, args[1], path.basename(sourcePath));
+export default async function cp(currentDir, args) {
+  const sourcePath = resolvePath(currentDir, args[0]);
+  const sourceFileName = path.basename(sourcePath);
+  const destFolderPath = resolvePath(currentDir, args[1]);
+  const targetPath = path.resolve(destFolderPath, sourceFileName);
 
-      const readStream = fs.createReadStream(sourcePath);
-      const writeStream = fs.createWriteStream(targetPath);
+  await fs.access(sourcePath);
 
-      readStream.on('error', (error) => {
-        logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
-        resolve();
-      });
+  const readStream = createReadStream(sourcePath);
+  const writeStream = createWriteStream(targetPath);
 
-      writeStream.on('error', (error) => {
-        logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
-        resolve();
-      });
-
-      writeStream.on('finish', () => {
-        resolve();
-      });
-
-      readStream.pipe(writeStream);
-    } catch (error) {
-      logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
-      resolve();
-    }
-  });
+  await pipeline(readStream, writeStream);
 }
