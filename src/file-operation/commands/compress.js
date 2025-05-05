@@ -1,6 +1,6 @@
 import fs from 'fs';
-import path from 'path';
 import zlib from 'zlib';
+import { resolvePath } from '../../helper.js';
 
 export default function compress(currentDir, args) {
   return new Promise((resolve) => {
@@ -10,13 +10,9 @@ export default function compress(currentDir, args) {
     }
 
     try {
-      const sourcePath = path.isAbsolute(args[0])
-        ? args[0]
-        : path.resolve(currentDir, args[0]);
+      const sourcePath = resolvePath(currentDir, args[0]);
 
-      const targetPath = path.isAbsolute(args[1])
-        ? args[1]
-        : path.resolve(currentDir, args[1]);
+      const targetPath = resolvePath(currentDir, args[1]);
 
       const readStream = fs.createReadStream(sourcePath);
       const writeStream = fs.createWriteStream(targetPath);

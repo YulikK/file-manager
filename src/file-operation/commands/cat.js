@@ -1,6 +1,6 @@
 import fs from 'fs';
-import path from 'path';
 import os from 'os';
+import { resolvePath } from '../../helper.js';
 
 export default function cat(currentDir, args) {
   return new Promise((resolve, reject) => {
@@ -10,9 +10,7 @@ export default function cat(currentDir, args) {
     }
 
     try {
-      const filePath = path.isAbsolute(args[0])
-        ? args[0]
-        : path.resolve(currentDir, args[0]);
+      const filePath = resolvePath(currentDir, args[0]);
 
       const readStream = fs.createReadStream(filePath, { encoding: 'utf8' });
 

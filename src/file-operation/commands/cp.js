@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { resolvePath } from '../../helper.js';
 
 export default function cp(currentDir, args) {
   return new Promise((resolve) => {

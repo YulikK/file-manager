@@ -3,7 +3,8 @@ import User from '../user/index.js';
 import Navigation from '../navigation/index.js';
 import FileOperation from '../file-operation/index.js';
 import OperatingSystem from '../operating-system/index.js';
-import { COMMANDS } from '../constants.js';
+import { COMMANDS_MAP } from '../constants.js';
+import { parseInput } from '../helper.js';
 
 export default class Cli {
   constructor() {
@@ -23,77 +24,77 @@ export default class Cli {
 
   #setupInputHandler() {
     process.stdin.on('data', async (data) => {
-      const input = data.toString().trim();
-      const [command, ...args] = input.split(' ');
+      const input = data.toString().replace(/(\r\n|\n|\r)/gm, '');
+      const { command, args } = parseInput(input);
 
       switch (command) {
-        case COMMANDS.UP:
+        case COMMANDS_MAP.UP:
           this.navigation.up();
           break;
-        case COMMANDS.CD:
+        case COMMANDS_MAP.CD:
           this.navigation.cd(args);
           break;
-        case COMMANDS.LS:
+        case COMMANDS_MAP.LS:
           this.navigation.ls();
           break;
-        case COMMANDS.CAT:
+        case COMMANDS_MAP.CAT:
           await this.fileOperation.cat(
             this.navigation.getCurrentDirectory(),
             args
           );
           break;
-        case COMMANDS.ADD:
+        case COMMANDS_MAP.ADD:
           await this.fileOperation.add(
             this.navigation.getCurrentDirectory(),
             args
           );
           break;
-        case COMMANDS.MKDIR:
+        case COMMANDS_MAP.MKDIR:
           await this.fileOperation.mkdir(
             this.navigation.getCurrentDirectory(),
             args
           );
           break;
-        case COMMANDS.RN:
+        case COMMANDS_MAP.RN:
           await this.fileOperation.rn(
             this.navigation.getCurrentDirectory(),
             args
           );
           break;
-        case COMMANDS.CP:
+        case COMMANDS_MAP.CP:
           await this.fileOperation.cp(
             this.navigation.getCurrentDirectory(),
             args
           );
           break;
-        case COMMANDS.MV:
+        case COMMANDS_MAP.MV:
           await this.fileOperation.mv(
             this.navigation.getCurrentDirectory(),
             args
           );
           break;
-        case COMMANDS.RM:
+        case COMMANDS_MAP.RM:
           await this.fileOperation.rm(
             this.navigation.getCurrentDirectory(),
             args
           );
           break;
-        case COMMANDS.OS:
+        case COMMANDS_MAP.OS:
           this.os.run(args);
           break;
-        case COMMANDS.HASH:
+        case COMMANDS_MAP.HASH:
           await this.fileOperation.hash(
             this.navigation.getCurrentDirectory(),
             args
           );
           break;
-        case COMMANDS.COMPRESS:
+        case COMMANDS_MAP.COMPRESS:
           await this.fileOperation.compress(
             this.navigation.getCurrentDirectory(),
             args
           );
           break;
-        case COMMANDS.DECOMPRESS:
+        case COMMANDS_MAP.DECOMPRESS:
           await this.fileOperation.decompress(
             this.navigation.getCurrentDirectory(),
             args
