@@ -1,6 +1,7 @@
 import fs from 'fs';
 import zlib from 'zlib';
 import { resolvePath, logWithColor } from '../../helper.js';
+import { COLORS_MAP } from '../../constants.js';
 
 export default function compress(currentDir, args) {
   return new Promise((resolve) => {
@@ -13,13 +14,13 @@ export default function compress(currentDir, args) {
       const brotli = zlib.createBrotliCompress();
 
       readStream.on('error', (error) => {
-        logWithColor(`Operation failed:${error}`, 'red');
+        logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
 
         resolve();
       });
 
       writeStream.on('error', (error) => {
-        logWithColor(`Operation failed:${error}`, 'red');
+        logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
         resolve();
       });
 
@@ -29,7 +30,7 @@ export default function compress(currentDir, args) {
 
       readStream.pipe(brotli).pipe(writeStream);
     } catch (error) {
-      logWithColor(`Operation failed:${error}`, 'red');
+      logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
       resolve();
     }
   });

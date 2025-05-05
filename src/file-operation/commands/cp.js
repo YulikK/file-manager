@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { resolvePath, logWithColor } from '../../helper.js';
+import { COLORS_MAP } from '../../constants.js';
 
 export default function cp(currentDir, args) {
   return new Promise((resolve) => {
@@ -14,12 +15,12 @@ export default function cp(currentDir, args) {
       const writeStream = fs.createWriteStream(targetPath);
 
       readStream.on('error', (error) => {
-        logWithColor(`Operation failed:${error}`, 'red');
+        logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
         resolve();
       });
 
       writeStream.on('error', (error) => {
-        logWithColor(`Operation failed:${error}`, 'red');
+        logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
         resolve();
       });
 
@@ -29,7 +30,7 @@ export default function cp(currentDir, args) {
 
       readStream.pipe(writeStream);
     } catch (error) {
-      logWithColor(`Operation failed:${error}`, 'red');
+      logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
       resolve();
     }
   });

@@ -1,6 +1,7 @@
 import process from 'process';
 import os from 'os';
 import { logWithColor } from '../helper.js';
+import { COLORS_MAP } from '../constants.js';
 
 const USER_NAME_PREFIX = '--username';
 class User {
@@ -11,13 +12,16 @@ class User {
   }
 
   #sayHi() {
-    logWithColor(`Welcome to the File Manager, ${this.user}!`, 'green');
+    logWithColor(
+      `Welcome to the File Manager, ${this.user}!`,
+      COLORS_MAP.GREEN
+    );
   }
 
   #sayBye() {
     logWithColor(
       `${os.EOL}Thank you for using File Manager, ${this.user}, goodbye!`,
-      'green'
+      COLORS_MAP.GREEN
     );
     process.exit();
   }

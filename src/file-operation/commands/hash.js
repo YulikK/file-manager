@@ -1,6 +1,7 @@
 import fs from 'fs';
 import crypto from 'crypto';
 import { resolvePath, logWithColor } from '../../helper.js';
+import { COLORS_MAP } from '../../constants.js';
 
 export default function hash(currentDir, args) {
   return new Promise((resolve) => {
@@ -11,7 +12,7 @@ export default function hash(currentDir, args) {
       const hash = crypto.createHash('sha256');
 
       readStream.on('error', (error) => {
-        logWithColor(`Operation failed:${error}`, 'red');
+        logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
         resolve();
       });
 
@@ -20,11 +21,11 @@ export default function hash(currentDir, args) {
       });
 
       readStream.on('end', () => {
-        logWithColor(hash.digest('hex'), 'blue');
+        logWithColor(hash.digest('hex'), COLORS_MAP.BLUE);
         resolve();
       });
     } catch (error) {
-      logWithColor(`Operation failed:${error}`, 'red');
+      logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
       resolve();
     }
   });

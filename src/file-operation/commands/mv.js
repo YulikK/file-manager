@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { logWithColor, resolvePath } from '../../helper.js';
+import { COLORS_MAP } from '../../constants.js';
 
 export default function mv(currentDir, args) {
   return new Promise((resolve) => {
@@ -17,19 +18,19 @@ export default function mv(currentDir, args) {
       const writeStream = fs.createWriteStream(finalTargetPath);
 
       readStream.on('error', (error) => {
-        logWithColor(`Operation failed:${error}`, 'red');
+        logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
         resolve();
       });
 
       writeStream.on('error', (error) => {
-        logWithColor(`Operation failed:${error}`, 'red');
+        logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
         resolve();
       });
 
       writeStream.on('finish', () => {
         fs.unlink(sourcePath, (error) => {
           if (error) {
-            logWithColor(`Operation failed:${error}`, 'red');
+            logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
           }
           resolve();
         });
@@ -37,7 +38,7 @@ export default function mv(currentDir, args) {
 
       readStream.pipe(writeStream);
     } catch (error) {
-      logWithColor(`Operation failed:${error}`, 'red');
+      logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
       resolve();
     }
   });

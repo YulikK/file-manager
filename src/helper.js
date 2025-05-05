@@ -1,6 +1,6 @@
 import path from 'path';
 import os from 'os';
-import { COMMANDS_MAP } from './constants.js';
+import { COMMANDS_MAP, COLORS_MAP } from './constants.js';
 
 export function resolvePath(currentDir, filePath) {
   return path.isAbsolute(filePath)
@@ -14,7 +14,10 @@ export const extractAllArguments = (command, userInput) => {
   );
 
   if (!commandConfig) {
-    logWithColor(`${os.EOL} Unknown command. Available commands:`, 'red');
+    logWithColor(
+      `${os.EOL} Unknown command. Available commands:`,
+      COLORS_MAP.RED
+    );
     console.table(
       Object.values(COMMANDS_MAP).map((cmd) => ({
         Command: cmd.name,
@@ -31,7 +34,7 @@ export const extractAllArguments = (command, userInput) => {
   if (providedArgsCount !== commandConfig.arg_count) {
     logWithColor(
       `Incorrect number of arguments provided. Expected ${commandConfig.arg_count} arguments.`,
-      'red'
+      COLORS_MAP.RED
     );
     return null;
   }
@@ -75,13 +78,10 @@ export const parseInput = (userInput) => {
 };
 
 export const logWithColor = (text, color) => {
-  const colors = {
-    reset: '\x1b[0m',
-    red: '\x1b[31m',
-    green: '\x1b[32m',
-    yellow: '\x1b[33m',
-    blue: '\x1b[34m',
-  };
+  const msg = makeColorMsg(text, color);
+  console.log(msg);
+};
 
-  console.log(`${colors[color]}${text}${colors.reset}`);
+export const makeColorMsg = (text, color) => {
+  return `${color}${text}${COLORS_MAP.RESET}`;
 };

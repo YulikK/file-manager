@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { logWithColor, resolvePath } from '../../helper.js';
+import { COLORS_MAP } from '../../constants.js';
 
 export default function rm(currentDir, args) {
   return new Promise((resolve) => {
@@ -8,12 +9,12 @@ export default function rm(currentDir, args) {
 
       fs.unlink(filePath, (error) => {
         if (error) {
-          logWithColor(`Operation failed:${error}`, 'red');
+          logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
         }
         resolve();
       });
     } catch (error) {
-      logWithColor(`Operation failed:${error}`, 'red');
+      logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
       resolve();
     }
   });

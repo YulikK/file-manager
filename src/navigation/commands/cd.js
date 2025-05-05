@@ -1,16 +1,10 @@
-import process from 'process';
-import { logWithColor, resolvePath } from '../../helper.js';
-import { COMMANDS_MAP } from '../../constants.js';
+import process from 'node:process';
+import { resolvePath } from '../../helper.js';
 
 export default function cd(currentDir, args) {
-  try {
-    const newPath = resolvePath(currentDir, args[0]);
+  const newPath = resolvePath(currentDir, args[0]);
 
-    process.chdir(newPath);
+  process.chdir(newPath);
 
-    return newPath;
-  } catch (error) {
-    logWithColor(`Operation failed:${error}`, 'red');
-    return currentDir;
-  }
+  return newPath;
 }

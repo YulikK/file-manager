@@ -1,6 +1,7 @@
 import os from 'os';
 import { OS_COMMANDS } from '../constants.js';
 import { logWithColor } from '../helper.js';
+import { COLORS_MAP } from '../constants.js';
 
 export default class OperatingSystem {
   run(arg) {
@@ -24,7 +25,7 @@ export default class OperatingSystem {
   }
 
   #getEOL() {
-    logWithColor(`OS EOL: ${JSON.stringify(os.EOL)}`, 'blue');
+    logWithColor(`OS EOL: ${JSON.stringify(os.EOL)}`, COLORS_MAP.BLUE);
   }
 
   #getCPUs() {
@@ -35,19 +36,19 @@ export default class OperatingSystem {
       speed: `${(cpu.speed / 1000).toFixed(2)} GHz`,
     }));
 
-    logWithColor(`Overall amount of CPUs: ${cpus.length}`, 'blue');
+    logWithColor(`Overall amount of CPUs: ${cpus.length}`, COLORS_MAP.BLUE);
     console.table(cpuInfo);
   }
 
   #getHomeDir() {
-    logWithColor(`Home dir: ${os.homedir()}`, 'blue');
+    logWithColor(`Home dir: ${os.homedir()}`, COLORS_MAP.BLUE);
   }
 
   #getUsername() {
-    logWithColor(`User name: ${os.userInfo().username}`, 'blue');
+    logWithColor(`User name: ${os.userInfo().username}`, COLORS_MAP.BLUE);
   }
 
   #getArchitecture() {
-    logWithColor(`Architecture: ${os.arch()}`, 'blue');
+    logWithColor(`Architecture: ${os.arch()}`, COLORS_MAP.BLUE);
   }
 }

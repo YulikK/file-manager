@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { logWithColor, resolvePath } from '../../helper.js';
+import { COLORS_MAP } from '../../constants.js';
 
 export default function rn(currentDir, args) {
   return new Promise((resolve, reject) => {
@@ -10,13 +11,13 @@ export default function rn(currentDir, args) {
 
       fs.rename(oldPath, newPath, (error) => {
         if (error) {
-          logWithColor(`Operation failed:${error}`, 'red');
+          logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
           resolve();
         }
         resolve();
       });
     } catch (error) {
-      logWithColor(`Operation failed:${error}`, 'red');
+      logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
       resolve();
     }
   });
