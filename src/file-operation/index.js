@@ -6,6 +6,8 @@ import cp from './commands/cp.js';
 import mv from './commands/mv.js';
 import rm from './commands/rm.js';
 import hash from './commands/hash.js';
+import compress from './commands/compress.js';
+import decompress from './commands/decompress.js';
 
 export default class FileOperation {
   async cat(currentDir, args) {
@@ -38,5 +40,13 @@ export default class FileOperation {
 
   async hash(currentDir, args) {
     return await hash(currentDir, args);
+  }
+
+  async compress(currentDir, args) {
+    return await compress(currentDir, args);
+  }
+
+  async decompress(currentDir, args) {
+    return await decompress(currentDir, args);
   }
 }

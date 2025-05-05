@@ -86,6 +86,18 @@ export default class Cli {
             args
           );
           break;
+        case 'compress':
+          await this.fileOperation.compress(
+            this.navigation.getCurrentDirectory(),
+            args
+          );
+          break;
+        case 'decompress':
+          await this.fileOperation.decompress(
+            this.navigation.getCurrentDirectory(),
+            args
+          );
+          break;
         default:
           console.log('Unknown command');
       }
