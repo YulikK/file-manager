@@ -1,36 +1,18 @@
-import fs from 'fs';
+import fs from 'node:fs/promises';
+import { createReadStream, createWriteStream } from 'node:fs';
+import { pipeline } from 'node:stream/promises';
 import zlib from 'zlib';
-import { resolvePath, logWithColor } from '../../helper.js';
-import { COLORS_MAP } from '../../constants.js';
+import { resolvePath } from '../../helper.js';
 
-export default function decompress(currentDir, args) {
-  return new Promise((resolve) => {
-    try {
-      const sourcePath = resolvePath(currentDir, args[0]);
-      const targetPath = resolvePath(currentDir, args[1]);
+export default async function decompress(currentDir, args) {
+  const sourcePath = resolvePath(currentDir, args[0]);
+  const targetPath = resolvePath(currentDir, args[1]);
 
-      const readStream = fs.createReadStream(sourcePath);
-      const writeStream = fs.createWriteStream(targetPath);
-      const brotli = zlib.createBrotliDecompress();
+  await fs.access(sourcePath);
 
-      readStream.on('error', (error) => {
-        logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
-        resolve();
-      });
+  const readStream = createReadStream(sourcePath);
+  const writeStream = createWriteStream(targetPath);
+  const brotli = zlib.createBrotliDecompress();
 
-      writeStream.on('error', (error) => {
-        logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
-        resolve();
-      });
-
-      writeStream.on('finish', () => {
-        resolve();
-      });
-
-      readStream.pipe(brotli).pipe(writeStream);
-    } catch (error) {
-      logWithColor(`Operation failed:${error}`, COLORS_MAP.RED);
-      resolve();
-    }
-  });
+  await pipeline(readStream, brotli, writeStream);
 }

@@ -1,5 +1,5 @@
-import path from 'path';
-import os from 'os';
+import path from 'node:path';
+import os from 'node:os';
 import { COMMANDS_MAP, COLORS_MAP, OS_COMMANDS } from './constants.js';
 
 export function resolvePath(currentDir, filePath) {
